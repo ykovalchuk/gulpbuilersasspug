@@ -2,7 +2,6 @@ var gulp = require ('gulp'),
     sass = require('gulp-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
-    fileinclude = require('gulp-file-include'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     connect = require('gulp-connect'),
@@ -14,7 +13,7 @@ var gulp = require ('gulp'),
 var pug = require('gulp-pug');
 
 
-gulp.task('default',['concat','sass','fileinclude','connect','watch']);
+gulp.task('default',['concat','sass','pug','connect','watch']);
 
 gulp.task('make-sprite',['sprite','replace']);
 
