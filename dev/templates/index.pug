@@ -1,10 +1,13 @@
-include ../chunks/head.pug
+doctype html
+html(lang="ru").no-js
+  head
+    include ../chunks/head.pug
 
-block body
-    .page-wrapper#page-wrapper
-        include ../chunks/header.pug
-        .page-body#page-body
-            include ../chunks/index.pug
-        include ../chunks/footer.pug
+  block body
+      .page-wrapper#page-wrapper
+            include ../chunks/header.pug
+            .page-body#page-body
+                include ../chunks/index.pug
+            include ../chunks/footer.pug
 
-include ../chunks/scripts.pug
+  include ../chunks/scripts.pug
