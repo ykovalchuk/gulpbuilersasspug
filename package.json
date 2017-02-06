@@ -9,6 +9,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "bourbon": "^5.0.0-beta.7",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-clean": "^0.3.2",
@@ -25,9 +26,6 @@
     "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.8",
     "gulp.spritesmith": "^6.2.1",
-    "node-bourbon": "^4.2.8"
-  },
-  "dependencies": {
-    "bourbon": "^4.2.7"
+    "sassdoc": "^2.1.20"
   }
 }
