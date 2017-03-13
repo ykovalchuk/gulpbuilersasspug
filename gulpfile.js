@@ -29,21 +29,21 @@ var config = {
 };
 
 gulp.task('svg', function() {
-    gulp.src('img/svg/*.svg')
+    gulp.src('dist/img/svg/*.svg')
         .pipe(svgSprite(config))
         .pipe(replace('&gt;', '>'))
-        .pipe(gulp.dest('img/svgsprite/'));
+        .pipe(gulp.dest('dist/img/svgsprite/'));
 });
 
 gulp.task('default', ['concat', 'sass', 'pug', 'connect', 'watch']);
 
 gulp.task('sprite', function() {
-    var spriteData = gulp.src('img/sprites/*.png').pipe(spritesmith({
+    var spriteData = gulp.src('dist/img/sprites/*.png').pipe(spritesmith({
         imgName: 'sprite.png',
         cssName: 'sprite.scss',
         algorithm: 'binary-tree',
     }));
-    spriteData.img.pipe(gulp.dest('img/pngsprite'));
+    spriteData.img.pipe(gulp.dest('dist/img/pngsprite'));
     spriteData.css.pipe(gulp.dest('dev/scss/temp/'));
     setTimeout(function() {
         gulp.src(['dev/scss/temp/sprite.scss'])
@@ -66,7 +66,7 @@ gulp.task('pug', function() {
         .pipe(pug({
             pretty: true
         }))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./dist/'));
     setTimeout(function() {
         reload();
     }, 800)
@@ -87,7 +87,7 @@ gulp.task('sass', function() {
             cascade: false
         }))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./css'));
+        .pipe(gulp.dest('./dist/css'));
 });
 
 gulp.task('connect', function() {
@@ -99,11 +99,11 @@ gulp.task('connect', function() {
 //Sprite Generator
 
 gulp.task('html', function() {
-    gulp.src('*.html')
+    gulp.src('./dist/*.html')
         .pipe(connect.reload());
 });
 gulp.task('css', function() {
-    gulp.src('css/*.css')
+    gulp.src('./dist/css/*.css')
         .pipe(connect.reload());
 });
 
@@ -111,7 +111,7 @@ gulp.task('concat', function() {
     return gulp.src(['./dev/js/jquery-1.11.1.min.js', './dev/js/lib/*.js'])
         .pipe(concat('libs.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./js/'));
+        .pipe(gulp.dest('./dist/js/'));
 });
 
 gulp.task('watch', function() {
@@ -121,7 +121,7 @@ gulp.task('watch', function() {
     gulp.watch('dev/scss/**/.sass', ['sass']);
     gulp.watch('dev/chunks/*.pug', ['pug']);
     gulp.watch('dev/templates/*.pug', ['pug']);
-    gulp.watch('img/svg/*.svg', ['svg']);
+    gulp.watch('dist/img/svg/*.svg', ['svg']);
     // gulp.watch(['*.html'], ['html']);
-    gulp.watch(['css/*.css'], ['css']);
+    gulp.watch(['dist/css/*.css'], ['css']);
 });
