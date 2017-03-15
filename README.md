@@ -3,9 +3,10 @@
 <ul>
   <li>Bootstrap 4 grid</li>
   <li>Gulp</li>
-  <li>Минификатор картинок</li>
-  <li>Спрайт генератор</li>
-  <li>библиотека миксинов bourbon.io</li>
+  <li>SVG спрайт генератор</li>
+  <li>PNG cпрайт генератор</li>
+  <li>Библиотека миксинов bourbon.io</li>
+   <li>Полифил для object-fit</li>
 </ul>
 
 # Установка
