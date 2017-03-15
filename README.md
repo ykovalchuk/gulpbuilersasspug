@@ -71,6 +71,12 @@ gulp svg
 localhost:1337
 ```
 
+# В сборке уже присутсвует полифил для object-fit - cover для отсталых браузеров
+
+```bash
+<img src="image.jpg" data-object-fit="cover">
+```
+
 # Пакеты которые есть в проекте
 
 ```json
