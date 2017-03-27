@@ -93,6 +93,7 @@ gulp.task('sass', function() {
 gulp.task('connect', function() {
     connect.server({
         port: 1337,
+        root: 'dist',
         livereload: true
     });
 });
