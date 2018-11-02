@@ -107,7 +107,7 @@ gulp.task('reload', function() {
 gulp.task('concat', function() {
     gulp.src('./dist/js/vendor')
         .pipe(clean());
-    return gulp.src(['./src/js/jquery-1.11.1.min.js', './src/js/lib/*.js'])
+    return gulp.src(['./src/js/jquery-3.0.0.min.js', './src/js/lib/*.js'])
         .pipe(concat('libs.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./dist/js/'));
