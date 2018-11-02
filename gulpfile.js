@@ -6,11 +6,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     connect = require('gulp-connect'),
     plumber = require('gulp-plumber'),
-    spritesmith = require('gulp.spritesmith'),
-    newer = require('gulp-newer'),
     clean = require('gulp-clean'),
     replace = require('gulp-replace'),
-    pug = require('gulp-pug'),
     svgSprite = require('gulp-svg-sprite'),
     inject = require('gulp-inject'),
     htmlreplace = require('gulp-html-replace'),
@@ -23,7 +20,6 @@ var config = {
             dest: '.',
             bust: false,
             sprite: "sprite.svg",
-            // example: true
         }
     },
     svg: {
@@ -38,7 +34,7 @@ gulp.task('svg', function() {
         .pipe(gulp.dest('dist/img/svgsprite/'));
 });
 
-gulp.task('build', ['concat', 'sass', 'pug', 'connect', 'watch']);
+gulp.task('build', ['concat', 'sass', 'connect', 'watch']);
 gulp.task('production', ['getscript', 'sass-prod'])
 
 gulp.task('getscript', function() {
@@ -68,42 +64,6 @@ gulp.task('getscript', function() {
     },500)
 })
 
-gulp.task('sprite', function() {
-    var spriteData = gulp.src('dist/img/sprites/*.png').pipe(spritesmith({
-        imgName: 'sprite.png',
-        cssName: 'sprite.scss',
-        algorithm: 'binary-tree',
-    }));
-    spriteData.img.pipe(gulp.dest('dist/img/pngsprite'));
-    spriteData.css.pipe(gulp.dest('src/scss/temp/'));
-
-    var spriteCheck = setInterval(function(){
-        console.log('Replace paths for background images');
-        fs.stat('src/scss/temp',function(err,stat){
-            if (err == null){
-                console.log('Status: success');
-                clearInterval(spriteCheck)
-                gulp.src(['src/scss/temp/sprite.scss'])
-                    .pipe(replace('url(#{$sprite-image})', 'url(../img/pngsprite/#{$sprite-image})'))
-                    .pipe(gulp.dest('src/scss/abstracts'));
-                gulp.src('src/scss/temp')
-                    .pipe(clean());
-            } else{
-                console.log('Wait for vendor folder, error code: '+err.code);
-            }
-        })
-    },500)
-});
-
-gulp.task('pug', function() {
-    gulp.src('./src/templates/*.pug')
-        .pipe(plumber({}))
-        .pipe(pug({
-            pretty: true
-        }))
-        .pipe(gulp.dest('./dist/'));
-});
-
 gulp.task('sass', function() {
     gulp.src('./src/scss/style.scss')
         .pipe(sourcemaps.init())
@@ -111,7 +71,6 @@ gulp.task('sass', function() {
             // errorHandler: notify.onError("Error: <%= error.message %>")
         }))
         .pipe(sass({
-            includePaths: require('bourbon').includePaths,
             outputStyle: 'compressed'
         }))
         .pipe(autoprefixer({
@@ -125,9 +84,6 @@ gulp.task('sass', function() {
 
 gulp.task('sass-prod', function() {
     gulp.src('./src/scss/style.scss')
-        .pipe(sass({
-            includePaths: require('bourbon').includePaths,
-        }))
         .pipe(autoprefixer({
             browsers: ['last 3 versions'],
             cascade: false
@@ -143,11 +99,7 @@ gulp.task('connect', function() {
     });
 });
 
-gulp.task('html', function() {
-    gulp.src('./dist/*.html')
-        .pipe(connect.reload());
-});
-gulp.task('css', function() {
+gulp.task('reload', function() {
     gulp.src('./dist/css/*.css')
         .pipe(connect.reload());
 });
@@ -166,10 +118,7 @@ gulp.task('watch', function() {
     gulp.watch('src/scss/*.sass', ['sass']);
     gulp.watch('src/scss/**/*.scss', ['sass']);
     gulp.watch('src/scss/**/.sass', ['sass']);
-    gulp.watch('src/chunks/*.pug', ['pug']);
-    gulp.watch('src/templates/*.pug', ['pug']);
     gulp.watch('src/js/lib/*.js',['concat']);
     gulp.watch('dist/img/svg/*.svg', ['svg'])
-    gulp.watch(['dist/*.html'], ['html']);
-    gulp.watch(['dist/css/*.css'], ['css']);
+    gulp.watch(['dist/css/*.css','dist/*.html'], ['reload']);
 });
