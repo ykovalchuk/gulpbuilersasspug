@@ -71,7 +71,8 @@ gulp.task('sass', function() {
             // errorHandler: notify.onError("Error: <%= error.message %>")
         }))
         .pipe(sass({
-            outputStyle: 'compressed'
+            outputStyle: 'compressed',
+            includePaths: ['./node_modules']
         }))
         .pipe(autoprefixer({
             browsers: ['last 3 versions'],
@@ -107,7 +108,7 @@ gulp.task('reload', function() {
 gulp.task('concat', function() {
     gulp.src('./dist/js/vendor')
         .pipe(clean());
-    return gulp.src(['./src/js/jquery-3.0.0.min.js', './src/js/lib/*.js'])
+    return gulp.src(['./node_modules/jquery/dist/jquery.js','./node_modules/bootstrap/dist/js/bootstrap.bundle.js' ,'./src/js/lib/*.js'])
         .pipe(concat('libs.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./dist/js/'));
